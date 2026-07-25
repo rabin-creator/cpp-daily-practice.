@@ -1,0 +1,72 @@
+1. Function Overloading in C++ (Compile-Time)
+Overloading happens in the same scope (usually within a single class or as standalone functions). 
+Functions share the same name, but their parameter list must differ in count or types.
+
+#include <iostream>
+
+class Print {
+public:
+    // Overloaded method 1: accepts an integer
+    void display(int i) {
+        std::cout << "Printing int: " << i << std::endl;
+    }
+
+    // Overloaded method 2: accepts a double
+    void display(double f) {
+        std::cout << "Printing double: " << f << std::endl;
+    }
+
+    // Overloaded method 3: accepts two integers
+    void display(int i, int j) {
+        std::cout << "Printing two ints: " << i << " and " << j << std::endl;
+    }
+};
+
+int main() {
+    Print p;
+    p.display(5);        // Calls display(int)
+    p.display(3.14);     // Calls display(double)
+    p.display(10, 20);   // Calls display(int, int)
+    return 0;
+}
+
+C++ Rule: You cannot overload a function by changing only its return type. The parameters must be different.
+
+
+2. Function Overriding in C++ (Run-Time)
+To override a function in C++, two things are required:
+The parent class function must be declared with virtual.
+The child class function must match the signature exactly.
+It is best practice to use the override specifier in the derived 
+class so the compiler catches any mistakes in the function signature.
+
+#include <iostream>
+
+class Base {
+public:
+    // Virtual keyword enables dynamic (run-time) binding
+    virtual void show() {
+        std::cout << "Base class show()" << std::endl;
+    }
+
+    // Virtual destructor is recommended for base classes
+    virtual ~Base() = default; 
+};
+
+class Derived : public Base {
+public:
+    // Replaces Base::show() implementation
+    void show() override {
+        std::cout << "Derived class show()" << std::endl;
+    }
+};
+
+int main() {
+    Base* ptr = new Derived();
+    
+    // Calls Derived::show() because Base::show() was virtual
+    ptr->show(); 
+
+    delete ptr;
+    return 0;
+}
