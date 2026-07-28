@@ -3,37 +3,43 @@
 
 using namespace std;
 
-class DefaultBook {
-public:
-    int pages;
-    string* title;
+class Book {
+private:
+    string title;
+    double price;
 
-    DefaultBook(string bookTitle, int bookPages) {
-        pages = bookPages;
-        title = new string(bookTitle);
+public:
+    // Standard Parameterized Constructor
+    Book(string t, double p) : title(t), price(p) {
+        cout << "Parameterized constructor called for: " << title << "\n";
     }
 
-    // NO custom copy constructor here! We let C++ use default copying.
+    // 1. CUSTOM COPY CONSTRUCTOR
+    Book(const Book &source) {
+        title = source.title + " (Copy)"; // Modifying slightly to track the copy execution
+        price = source.price;
+        cout << "CUSTOM copy constructor called for: " << title << "\n";
+    }
 
-    ~DefaultBook() {
-        // Commented out to prevent the program from crashing instantly during this example!
-        // delete title; 
+    // Method to display book details
+    void display() const {
+        cout << "Title: " << title << " | Price: Rs. " << price << "\n";
     }
 };
 
 int main() {
-    // 1. Create original book
-    DefaultBook book1("C++ Beginners", 300);
-    
-    // 2. Default copy happens here
-    DefaultBook book2 = book1; 
+    // Creating the original book object
+    Book book1("C++ Beginner to Advanced", 750.00);
+    cout << "--- book1 details ---\n";
+    book1.display();
+    cout << "\n";
 
-    // 3. Change book 2's title
-    *(book2.title) = "Advanced C++"; 
-
-    // 4. Print both titles
-    cout << "Book 1 Title: " << *(book1.title) << "\n";
-    cout << "Book 2 Title: " << *(book2.title) << "\n";
+    // 2. USING THE COPY CONSTRUCTOR
+    // This creates book2 as an exact duplicate of book1
+    Book book2 = book1; 
+    cout << "--- book2 details ---\n";
+    book2.display();
+    cout << "\n";
 
     return 0;
 }

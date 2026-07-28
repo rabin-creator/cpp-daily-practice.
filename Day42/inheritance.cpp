@@ -6,11 +6,13 @@ class Animal {
 public:
     std::string name;
 
-    Animal(std::string animalName) {
+    Animal(std::string animalName)
+     {
         name = animalName;
     }
 
-    void eat() {
+    void eat()
+     {
         std::cout << name << " is eating." << std::endl;
     }
 };

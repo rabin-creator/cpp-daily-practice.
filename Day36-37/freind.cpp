@@ -1,8 +1,7 @@
 #include <iostream>
 using namespace std;
 
-// Forward declaration
-class B;
+class B; // forward declaration
 
 class A {
 private:
@@ -11,24 +10,21 @@ private:
 public:
     A(int val) : dataA(val) {}
 
-    // Friend function declaration
+    // friend function
     friend void showData(const A& obj);
 
-    // Friend class declaration
+    // friend class
     friend class B;
 };
 
-// Friend function definition
 void showData(const A& obj) {
-    cout << "Accessing private data of A using friend function: " 
-         << obj.dataA << endl;
+    cout << "Friend function: " << obj.dataA << endl;
 }
 
 class B {
 public:
     void display(const A& obj) {
-        cout << "Accessing private data of A using friend class: " 
-             << obj.dataA << endl;
+        cout << "Friend class: " << obj.dataA << endl;
     }
 };
 
@@ -36,11 +32,8 @@ int main() {
     A objA(42);
     B objB;
 
-    // Using friend function
-    showData(objA);
-
-    // Using friend class
-    objB.display(objA);
+    showData(objA);     // friend function
+    objB.display(objA); // friend class
 
     return 0;
 }
